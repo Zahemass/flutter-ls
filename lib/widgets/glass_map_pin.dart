@@ -2,41 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 
 class GlassMapPin extends StatelessWidget {
-  final String distance;
   final String emoji;
   final String label;
+  final double? distanceInKm;
 
   const GlassMapPin({
     Key? key,
-    required this.distance,
     required this.emoji,
     required this.label,
+    this.distanceInKm,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final showDistance = distanceInKm != null && distanceInKm! > 3;
+
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        // 📏 Distance label
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-          decoration: BoxDecoration(
-            color: Colors.pinkAccent,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Text(
-            distance,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
+        // 📏 Distance badge
+        if (showDistance)
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Text(
+              "${distanceInKm!.toStringAsFixed(1)} km",
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
 
         const SizedBox(height: 5),
 
-        // 📍 Glass marker
+        // 📍 Glassmorphic emoji circle
         GlassmorphicContainer(
           width: 50,
           height: 50,
