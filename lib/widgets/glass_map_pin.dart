@@ -1,3 +1,4 @@
+// widgets/glass_map_pin.dart
 import 'package:flutter/material.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 
@@ -15,71 +16,62 @@ class GlassMapPin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final showDistance = distanceInKm != null && distanceInKm! > 3;
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // 📏 Distance badge
-        if (showDistance)
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Text(
-              "${distanceInKm!.toStringAsFixed(1)} km",
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
+    return GlassmorphicContainer(
+      width: 90,
+      height: 110,
+      borderRadius: 20,
+      blur: 20,
+      alignment: Alignment.center,
+      border: 1,
+      linearGradient: LinearGradient(
+        colors: [
+          Colors.white.withOpacity(0.1),
+          Colors.white.withOpacity(0.1),
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+      borderGradient: LinearGradient(
+        colors: [
+          Colors.white.withOpacity(0.2),
+          Colors.white.withOpacity(0.2),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (distanceInKm != null)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              margin: const EdgeInsets.only(bottom: 4),
+              decoration: BoxDecoration(
+                color: Colors.pinkAccent,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                "${(distanceInKm! * 1000).toInt() > 1000 ? '${distanceInKm!.toStringAsFixed(1)} km' : '${(distanceInKm! * 1000).toInt()} m'}",
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                ),
               ),
             ),
-          ),
-
-        const SizedBox(height: 5),
-
-        // 📍 Glassmorphic emoji circle
-        GlassmorphicContainer(
-          width: 50,
-          height: 50,
-          borderRadius: 25,
-          blur: 20,
-          alignment: Alignment.center,
-          border: 1,
-          linearGradient: LinearGradient(
-            colors: [
-              Colors.white.withOpacity(0.2),
-              Colors.white.withOpacity(0.1),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderGradient: LinearGradient(
-            colors: [
-              Colors.white.withOpacity(0.4),
-              Colors.white.withOpacity(0.1),
-            ],
-          ),
-          child: Text(
+          Text(
             emoji,
-            style: const TextStyle(fontSize: 22),
+            style: const TextStyle(fontSize: 30),
           ),
-        ),
-
-        const SizedBox(height: 4),
-
-        // 🏷️ Label
-        Text(
-          label,
-          style: const TextStyle(
-            color: Colors.black87,
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 12,
+              color: Colors.black87,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

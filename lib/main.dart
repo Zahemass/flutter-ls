@@ -1,6 +1,6 @@
+// main.dart
 import 'package:flutter/material.dart';
-import 'package:sample_proj/screens/welcome_page.dart';
-import 'screens/map_screen.dart';
+import 'screens/simple_map_screen.dart'; // 👈 Make sure this file contains the full version
 
 void main() {
   runApp(const MyApp());
@@ -11,13 +11,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Liquid Glass Signup',
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Poppins',
-      ),
-      home: const MapScreen(),
+      home: SimpleMapScreen(), // ✅ This points to your updated screen
     );
   }
 }
